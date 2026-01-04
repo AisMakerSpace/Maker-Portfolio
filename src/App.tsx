@@ -1,7 +1,7 @@
 import './App.css';
 
 interface AppProps {
-  onNavigate: (view: 'landing' | 'dashboard' | 'editor') => void;
+  onNavigate: (view: 'landing' | 'dashboard' | 'editor' | 'portfolio') => void;
 }
 
 function App({ onNavigate }: AppProps) {
@@ -28,7 +28,7 @@ function App({ onNavigate }: AppProps) {
               <p>Turn your workshop projects into professional portfolios, posters, and presentations with a single click. Documenting your work has never been this joyful.</p>
               <div className="hero-actions">
                 <button className="btn-primary btn-large" onClick={() => onNavigate('dashboard')}>Create Your First Project</button>
-                <button className="btn-secondary">View Examples</button>
+                <button className="btn-secondary" onClick={() => onNavigate('portfolio')}>View Portfolio</button>
               </div>
             </div>
             <div className="hero-visual">

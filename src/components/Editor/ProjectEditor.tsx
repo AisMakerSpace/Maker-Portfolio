@@ -144,7 +144,7 @@ const ProjectEditor = ({ onNavigate, projectId }: EditorProps) => {
                         <div className={`section-item ${activeSection === 'info' ? 'active' : ''}`} onClick={() => setActiveSection('info')}>Project Info</div>
                         <div className={`section-item ${activeSection === 'materials' ? 'active' : ''}`} onClick={() => setActiveSection('materials')}>Materials List</div>
                         <div className={`section-item ${activeSection === 'steps' ? 'active' : ''}`} onClick={() => setActiveSection('steps')}>Process Steps</div>
-                        <div className={`section-item ${activeSection === 'preview' ? 'active' : ''}`} onClick={() => setActiveSection('preview')}>Poster Preview</div>
+                        <div className={`section-item ${activeSection === 'preview' ? 'active' : ''}`} onClick={() => setActiveSection('preview')}>Design Poster</div>
                     </div>
                 </aside>
 
