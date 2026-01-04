@@ -6,6 +6,8 @@ import PublicPortfolio from './components/PublicPortfolio/PublicPortfolio';
 import LoginView from './components/Auth/LoginView';
 import { getCurrentUser } from './utils/gamification';
 import type { User } from './utils/gamification';
+import { GoogleOAuthProvider } from '@react-oauth/google';
+import { GOOGLE_CLIENT_ID } from './config';
 
 function MainApp() {
     console.log('🎯 MainApp is rendering!');
@@ -49,15 +51,17 @@ function MainApp() {
     };
 
     return (
-        <div className="main-app-host">
-            {showLogin && (
-                <LoginView
-                    onLoginSuccess={handleLoginSuccess}
-                    onClose={() => setShowLogin(false)}
-                />
-            )}
-            {renderView()}
-        </div>
+        <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>
+            <div className="main-app-host">
+                {showLogin && (
+                    <LoginView
+                        onLoginSuccess={handleLoginSuccess}
+                        onClose={() => setShowLogin(false)}
+                    />
+                )}
+                {renderView()}
+            </div>
+        </GoogleOAuthProvider>
     );
 }
 

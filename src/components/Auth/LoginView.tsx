@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { GoogleLogin } from '@react-oauth/google';
+import { jwtDecode } from 'jwt-decode';
 import { setCurrentUser, getAllUsers } from '../../utils/gamification';
 import type { User } from '../../utils/gamification';
 import './LoginView.css';
@@ -9,20 +10,31 @@ interface LoginViewProps {
 }
 
 const LoginView = ({ onLoginSuccess, onClose }: LoginViewProps) => {
-    const [isLoading, setIsLoading] = useState(false);
-    const [showPicker, setShowPicker] = useState(false);
     const mockUsers = getAllUsers();
 
-    const handleGoogleLogin = () => {
-        setIsLoading(true);
-        // Simulate Google Auth delay
-        setTimeout(() => {
-            setIsLoading(false);
-            setShowPicker(true);
-        }, 1000);
+    const handleLoginSuccess = (credentialResponse: any) => {
+        try {
+            const decoded: any = jwtDecode(credentialResponse.credential);
+
+            const newUser: User = {
+                id: decoded.sub,
+                username: decoded.name,
+                email: decoded.email,
+                avatar: decoded.picture,
+                points: 0,
+                badges: [],
+                isMock: false
+            };
+
+            setCurrentUser(newUser);
+            onLoginSuccess();
+        } catch (error) {
+            console.error('Login failed:', error);
+            alert('Failed to process Google Login. Please try again.');
+        }
     };
 
-    const selectAccount = (user: User) => {
+    const selectMockAccount = (user: User) => {
         setCurrentUser(user);
         onLoginSuccess();
     };
@@ -32,68 +44,43 @@ const LoginView = ({ onLoginSuccess, onClose }: LoginViewProps) => {
             <div className="login-card animate-in" onClick={(e) => e.stopPropagation()}>
                 <button className="login-close" onClick={onClose}>✕</button>
 
-                {!showPicker ? (
-                    <>
-                        <div className="login-header">
-                            <span className="login-logo">☀️</span>
-                            <h1>Sign in to MakerPort</h1>
-                            <p>Connect with other makers and share your creative journey.</p>
-                        </div>
+                <div className="login-header">
+                    <span className="login-logo">☀️</span>
+                    <h1>Sign in to MakerPort</h1>
+                    <p>Connect with other makers and share your creative journey.</p>
+                </div>
 
-                        <div className="login-body">
-                            <button
-                                className={`btn-google ${isLoading ? 'loading' : ''}`}
-                                onClick={handleGoogleLogin}
-                                disabled={isLoading}
-                            >
-                                {isLoading ? (
-                                    <span className="spinner"></span>
-                                ) : (
-                                    <>
-                                        <img src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg" alt="Google" />
-                                        Sign in with Google
-                                    </>
-                                )}
-                            </button>
+                <div className="login-body">
+                    <div className="google-login-container">
+                        <GoogleLogin
+                            onSuccess={handleLoginSuccess}
+                            onError={() => {
+                                console.log('Login Failed');
+                                alert('Google Login Failed');
+                            }}
+                            useOneTap
+                            theme="outline"
+                            size="large"
+                            width="100%"
+                        />
+                    </div>
 
-                            <div className="login-divider">
-                                <span>Demo Mode</span>
-                            </div>
+                    <div className="login-divider">
+                        <span>Or continue with Demo Mode</span>
+                    </div>
 
-                            <p className="demo-hint">Use the button above to simulate a Google Account login. You can test with two different accounts!</p>
-                        </div>
-                    </>
-                ) : (
-                    <div className="account-picker">
-                        <div className="picker-header">
-                            <img src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg" alt="Google" className="mini-g" />
-                            <h2>Choose an account</h2>
-                            <p>to continue to <strong>MakerPort</strong></p>
-                        </div>
-
-                        <div className="picker-list">
+                    <div className="account-picker-mini">
+                        <p className="picker-hint">Quick switch for testing:</p>
+                        <div className="picker-list-mini">
                             {mockUsers.map(user => (
-                                <div key={user.id} className="picker-item" onClick={() => selectAccount(user)}>
-                                    <img src={user.avatar} alt={user.username} className="picker-avatar" />
-                                    <div className="picker-info">
-                                        <div className="picker-name">{user.username}</div>
-                                        <div className="picker-email">{user.email}</div>
-                                    </div>
+                                <div key={user.id} className="picker-item-mini" onClick={() => selectMockAccount(user)}>
+                                    <img src={user.avatar} alt={user.username} className="picker-avatar-mini" />
+                                    <span>{user.username}</span>
                                 </div>
                             ))}
-                            <div className="picker-item disabled">
-                                <div className="picker-icon">👤</div>
-                                <div className="picker-info">
-                                    <div className="picker-name">Add another account</div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div className="picker-footer">
-                            <p>To continue, Google will share your name, email address, and profile picture with MakerPort.</p>
                         </div>
                     </div>
-                )}
+                </div>
 
                 <div className="login-footer-small">
                     <p>English (United States)</p>
