@@ -5,13 +5,14 @@ import ProjectEditor from './components/Editor/ProjectEditor';
 import PublicPortfolio from './components/PublicPortfolio/PublicPortfolio';
 import LoginView from './components/Auth/LoginView';
 import { getCurrentUser } from './utils/gamification';
+import type { User } from './utils/gamification';
 
 function MainApp() {
     console.log('🎯 MainApp is rendering!');
     const [view, setView] = useState<'landing' | 'dashboard' | 'editor' | 'portfolio'>('landing');
     const [editingProjectId, setEditingProjectId] = useState<string | null>(null);
     const [showLogin, setShowLogin] = useState(false);
-    const [user, setUser] = useState(getCurrentUser());
+    const [user, setUser] = useState<User | null>(getCurrentUser());
 
     useEffect(() => {
         // Update user state when view changes potentially affecting auth
@@ -20,7 +21,7 @@ function MainApp() {
 
     const navigateTo = (newView: 'landing' | 'dashboard' | 'editor' | 'portfolio', projectId?: string) => {
         // Protect dashboard and editor
-        if ((newView === 'dashboard' || newView === 'editor') && !user.isMock && !localStorage.getItem('maker-active-user')) {
+        if ((newView === 'dashboard' || newView === 'editor') && !user) {
             setShowLogin(true);
             return;
         }

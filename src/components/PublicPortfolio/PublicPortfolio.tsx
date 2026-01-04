@@ -46,15 +46,13 @@ const PublicPortfolio = ({ onNavigate }: PublicPortfolioProps) => {
     const [selectedProject, setSelectedProject] = useState<Project | null>(null);
     const [showPresentation, setShowPresentation] = useState(false);
     const [commentText, setCommentText] = useState('');
-    const [activeUser, setActiveUser] = useState(getCurrentUser());
-
-    useEffect(() => {
-        loadProjects();
-        // Listen for user changes (for multi-account testing)
-        const handleAuthChange = () => setActiveUser(getCurrentUser());
-        window.addEventListener('storage', handleAuthChange);
-        return () => window.removeEventListener('storage', handleAuthChange);
-    }, []);
+    const [activeUser, setActiveUser] = useState(getCurrentUser() || {
+        id: 'guest',
+        username: 'Guest',
+        avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Guest',
+        points: 0,
+        badges: []
+    });
 
     const loadProjects = () => {
         const saved = localStorage.getItem('maker-projects');
@@ -70,6 +68,17 @@ const PublicPortfolio = ({ onNavigate }: PublicPortfolioProps) => {
             }
         }
     };
+
+    useEffect(() => {
+        loadProjects();
+        // Listen for user changes (for multi-account testing)
+        const handleAuthChange = () => {
+            const user = getCurrentUser();
+            if (user) setActiveUser(user);
+        };
+        window.addEventListener('storage', handleAuthChange);
+        return () => window.removeEventListener('storage', handleAuthChange);
+    }, [selectedProject]);
 
     const openProjectDetail = (project: Project) => {
         setSelectedProject(project);

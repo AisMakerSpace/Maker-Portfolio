@@ -119,13 +119,10 @@ export const getLeaderboard = (): User[] => {
 };
 
 // Authentication Shim
-export const getCurrentUser = (): User => {
+export const getCurrentUser = (): User | null => {
     const active = localStorage.getItem('maker-active-user');
     if (active) return JSON.parse(active);
-
-    // Default to first user if none logged in for demo
-    const users = getAllUsers();
-    return users[0];
+    return null;
 };
 
 export const setCurrentUser = (user: User) => {
@@ -161,7 +158,7 @@ export const updateUserPoints = (userId: string, pointsToAdd: number): void => {
 
         // Update active user if it's the same person
         const active = getCurrentUser();
-        if (active.id === userId) {
+        if (active && active.id === userId) {
             active.points += pointsToAdd;
             localStorage.setItem('maker-active-user', JSON.stringify(active));
         }
@@ -172,6 +169,8 @@ export const updateUserPoints = (userId: string, pointsToAdd: number): void => {
 // Social Actions
 export const addComment = (projectId: string, text: string) => {
     const user = getCurrentUser();
+    if (!user) return;
+
     const saved = localStorage.getItem('maker-projects');
     if (!saved) return;
 
@@ -203,6 +202,8 @@ export const addComment = (projectId: string, text: string) => {
 
 export const awardProject = (projectId: string, awardId: string) => {
     const user = getCurrentUser();
+    if (!user) return;
+
     const saved = localStorage.getItem('maker-projects');
     if (!saved) return;
 
