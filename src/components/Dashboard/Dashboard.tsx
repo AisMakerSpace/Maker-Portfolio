@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import './Dashboard.css';
 
 interface Project {
@@ -9,7 +9,11 @@ interface Project {
     thumbnail?: string;
 }
 
-const Dashboard: React.FC = () => {
+interface DashboardProps {
+    onNavigate: (view: 'landing' | 'dashboard' | 'editor') => void;
+}
+
+const Dashboard = ({ onNavigate }: DashboardProps) => {
     const [projects] = useState<Project[]>([
         { id: '1', title: 'Solar Powered Rover', lastEdited: '2 hours ago', status: 'draft' },
         { id: '2', title: 'Hydraulic Claw', lastEdited: '1 day ago', status: 'completed' },
@@ -23,11 +27,11 @@ const Dashboard: React.FC = () => {
                     <div className="user-welcome">
                         <span className="wave">👋</span>
                         <div>
-                            <h2>Welcome back, Maker!</h2>
+                            <h2 style={{ cursor: 'pointer' }} onClick={() => onNavigate('landing')}>Welcome back, Maker!</h2>
                             <p>You have {projects.length} active projects</p>
                         </div>
                     </div>
-                    <button className="btn-primary">+ New Project</button>
+                    <button className="btn-primary" onClick={() => onNavigate('editor')}>+ New Project</button>
                 </div>
             </header>
 
@@ -72,14 +76,14 @@ const Dashboard: React.FC = () => {
                                     <h4>{project.title}</h4>
                                     <p>Edited {project.lastEdited}</p>
                                     <div className="project-actions">
-                                        <button className="btn-icon">✏️</button>
+                                        <button className="btn-icon" onClick={() => onNavigate('editor')}>✏️</button>
                                         <button className="btn-icon">📁</button>
                                         <button className="btn-icon">💬</button>
                                     </div>
                                 </div>
                             </div>
                         ))}
-                        <div className="card create-card">
+                        <div className="card create-card" onClick={() => onNavigate('editor')}>
                             <div className="create-icon">+</div>
                             <p>Start Documentation</p>
                         </div>

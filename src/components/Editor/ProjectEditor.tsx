@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import './ProjectEditor.css';
 
 interface ProjectData {
@@ -8,7 +8,11 @@ interface ProjectData {
     steps: { id: string; text: string; image?: string }[];
 }
 
-const ProjectEditor: React.FC = () => {
+interface EditorProps {
+    onNavigate: (view: 'landing' | 'dashboard' | 'editor') => void;
+}
+
+const ProjectEditor = ({ onNavigate }: EditorProps) => {
     const [data, setData] = useState<ProjectData>({
         title: 'New Maker Project',
         description: '',
@@ -57,7 +61,7 @@ const ProjectEditor: React.FC = () => {
             <nav className="editor-nav">
                 <div className="container editor-nav-flex">
                     <div className="editor-breadcrumb">
-                        <span>Projects</span> / <strong>{data.title}</strong>
+                        <span style={{ cursor: 'pointer' }} onClick={() => onNavigate('dashboard')}>Projects</span> / <strong>{data.title}</strong>
                     </div>
                     <div className="save-status">
                         {isSaving ? 'Saving...' : `Last saved: ${lastSaved}`}
