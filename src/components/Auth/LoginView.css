@@ -50,34 +50,6 @@
     margin-bottom: 2rem;
 }
 
-.btn-google {
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 1rem;
-    padding: 0.8rem;
-    background: #fff;
-    border: 1px solid #dadce0;
-    border-radius: 0.5rem;
-    font-weight: 600;
-    color: #3c4043;
-    cursor: pointer;
-    transition: background 0.2s;
-    height: 50px;
-    font-family: 'Roboto', sans-serif;
-}
-
-.btn-google img {
-    width: 20px;
-    height: 20px;
-}
-
-.btn-google:hover:not(:disabled) {
-    background: #f8f9fa;
-    border-color: #d2e3fc;
-}
-
 .login-divider {
     margin: 2rem 0;
     position: relative;
@@ -99,91 +71,6 @@
     position: relative;
     color: #70757a;
     font-size: 0.9rem;
-}
-
-.demo-hint {
-    color: #888;
-    font-size: 0.9rem;
-    line-height: 1.4;
-}
-
-/* Account Picker */
-.account-picker {
-    text-align: left;
-}
-
-.picker-header {
-    text-align: center;
-    margin-bottom: 2rem;
-}
-
-.mini-g {
-    width: 32px;
-    margin-bottom: 1rem;
-}
-
-.picker-header h2 {
-    font-size: 1.5rem;
-    margin-bottom: 0.5rem;
-}
-
-.picker-header p {
-    color: #5f6368;
-}
-
-.picker-list {
-    border-top: 1px solid #eee;
-    margin-bottom: 1.5rem;
-}
-
-.picker-item {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    padding: 1rem;
-    border-bottom: 1px solid #eee;
-    cursor: pointer;
-    transition: background 0.2s;
-}
-
-.picker-item:hover {
-    background: #f8f9fa;
-}
-
-.picker-avatar {
-    width: 36px;
-    height: 36px;
-    border-radius: 50%;
-}
-
-.picker-icon {
-    width: 36px;
-    height: 36px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.2rem;
-    color: #5f6368;
-}
-
-.picker-info {
-    flex: 1;
-}
-
-.picker-name {
-    font-weight: 500;
-    color: #202124;
-}
-
-.picker-email {
-    font-size: 0.8rem;
-    color: #5f6368;
-}
-
-.picker-footer {
-    font-size: 0.8rem;
-    color: #5f6368;
-    line-height: 1.4;
 }
 
 .login-footer-small {
@@ -213,4 +100,65 @@
         opacity: 1;
         transform: scale(1);
     }
+}
+
+.google-login-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 2rem;
+    min-height: 44px;
+}
+
+.account-picker-mini {
+    text-align: left;
+    background: #f8f9fa;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    margin-top: 1rem;
+}
+
+.picker-hint {
+    font-size: 0.8rem;
+    color: #5f6368;
+    margin-bottom: 0.8rem;
+    font-weight: 500;
+}
+
+.picker-list-mini {
+    display: flex;
+    gap: 1rem;
+    overflow-x: auto;
+    padding-bottom: 0.5rem;
+}
+
+.picker-item-mini {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+    min-width: 80px;
+    padding: 0.5rem;
+    border-radius: 0.4rem;
+    transition: background 0.2s;
+}
+
+.picker-item-mini:hover {
+    background: #fff;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.picker-avatar-mini {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+}
+
+.picker-item-mini span {
+    font-size: 0.75rem;
+    color: #3c4043;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
 }
