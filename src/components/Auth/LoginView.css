@@ -1,0 +1,216 @@
+.login-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(8px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2000;
+}
+
+.login-card {
+    background: #fff;
+    width: 100%;
+    max-width: 450px;
+    padding: 3rem;
+    border-radius: 1rem;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+    text-align: center;
+    border: 1px solid #e0e0e0;
+    position: relative;
+}
+
+.login-close {
+    position: absolute;
+    top: 1.5rem;
+    right: 1.5rem;
+    background: none;
+    border: none;
+    font-size: 1.2rem;
+    color: #999;
+    cursor: pointer;
+}
+
+.login-logo {
+    font-size: 3rem;
+    display: block;
+    margin-bottom: 1rem;
+}
+
+.login-header h1 {
+    font-size: 1.8rem;
+    margin-bottom: 0.5rem;
+    color: #202124;
+}
+
+.login-header p {
+    color: #5f6368;
+    line-height: 1.5;
+    margin-bottom: 2rem;
+}
+
+.btn-google {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    padding: 0.8rem;
+    background: #fff;
+    border: 1px solid #dadce0;
+    border-radius: 0.5rem;
+    font-weight: 600;
+    color: #3c4043;
+    cursor: pointer;
+    transition: background 0.2s;
+    height: 50px;
+    font-family: 'Roboto', sans-serif;
+}
+
+.btn-google img {
+    width: 20px;
+    height: 20px;
+}
+
+.btn-google:hover:not(:disabled) {
+    background: #f8f9fa;
+    border-color: #d2e3fc;
+}
+
+.login-divider {
+    margin: 2rem 0;
+    position: relative;
+}
+
+.login-divider::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: #eee;
+}
+
+.login-divider span {
+    background: #fff;
+    padding: 0 1rem;
+    position: relative;
+    color: #70757a;
+    font-size: 0.9rem;
+}
+
+.demo-hint {
+    color: #888;
+    font-size: 0.9rem;
+    line-height: 1.4;
+}
+
+/* Account Picker */
+.account-picker {
+    text-align: left;
+}
+
+.picker-header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.mini-g {
+    width: 32px;
+    margin-bottom: 1rem;
+}
+
+.picker-header h2 {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.picker-header p {
+    color: #5f6368;
+}
+
+.picker-list {
+    border-top: 1px solid #eee;
+    margin-bottom: 1.5rem;
+}
+
+.picker-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+    border-bottom: 1px solid #eee;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.picker-item:hover {
+    background: #f8f9fa;
+}
+
+.picker-avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+}
+
+.picker-icon {
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    color: #5f6368;
+}
+
+.picker-info {
+    flex: 1;
+}
+
+.picker-name {
+    font-weight: 500;
+    color: #202124;
+}
+
+.picker-email {
+    font-size: 0.8rem;
+    color: #5f6368;
+}
+
+.picker-footer {
+    font-size: 0.8rem;
+    color: #5f6368;
+    line-height: 1.4;
+}
+
+.login-footer-small {
+    margin-top: 2rem;
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.75rem;
+    color: #70757a;
+}
+
+.footer-links {
+    display: flex;
+    gap: 1rem;
+}
+
+.animate-in {
+    animation: fadeInScale 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes fadeInScale {
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}

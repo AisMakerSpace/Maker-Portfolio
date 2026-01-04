@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
-import { getLeaderboard, BADGES, User } from '../../utils/gamification';
+import { getLeaderboard, BADGES } from '../../utils/gamification';
+import type { User } from '../../utils/gamification';
 import './Leaderboard.css';
 
 const Leaderboard = () => {

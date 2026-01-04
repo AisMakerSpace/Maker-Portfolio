@@ -2,9 +2,11 @@ import './App.css';
 
 interface AppProps {
   onNavigate: (view: 'landing' | 'dashboard' | 'editor' | 'portfolio') => void;
+  onShowLogin: () => void;
 }
 
-function App({ onNavigate }: AppProps) {
+function App({ onNavigate, onShowLogin }: AppProps) {
+  console.log('🌟 Landing page is rendering!');
   return (
     <div className="app-container">
       <nav className="navbar">
@@ -14,7 +16,7 @@ function App({ onNavigate }: AppProps) {
             <span className="logo-text">MakerPort</span>
           </div>
           <div className="nav-links">
-            <button className="btn-login" onClick={() => onNavigate('dashboard')}>Login</button>
+            <button className="btn-login" onClick={onShowLogin}>Login</button>
             <button className="btn-primary" onClick={() => onNavigate('dashboard')}>Get Started</button>
           </div>
         </div>
@@ -27,7 +29,7 @@ function App({ onNavigate }: AppProps) {
               <h1>Showcase Your Maker Journey</h1>
               <p>Turn your workshop projects into professional portfolios, posters, and presentations with a single click. Documenting your work has never been this joyful.</p>
               <div className="hero-actions">
-                <button className="btn-primary btn-large" onClick={() => onNavigate('dashboard')}>Create Your First Project</button>
+                <button className="btn-primary btn-large" onClick={onShowLogin}>Create Your First Project</button>
                 <button className="btn-secondary" onClick={() => onNavigate('portfolio')}>View Portfolio</button>
               </div>
             </div>

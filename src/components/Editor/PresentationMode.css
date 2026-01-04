@@ -1,0 +1,227 @@
+.presentation-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: #000;
+    color: #fff;
+    z-index: 2000;
+    display: flex;
+    flex-direction: column;
+    font-family: 'Outfit', sans-serif;
+}
+
+.close-btn {
+    position: absolute;
+    top: 2rem;
+    right: 2rem;
+    background: rgba(255, 255, 255, 0.1);
+    border: none;
+    color: #fff;
+    padding: 0.5rem 1rem;
+    border-radius: 2rem;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.close-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.presentation-viewport {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+}
+
+.slide {
+    width: 100%;
+    max-width: 1200px;
+    height: 80vh;
+    background: #111;
+    border-radius: 2rem;
+    padding: 4rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.title-slide {
+    text-align: center;
+    align-items: center;
+}
+
+.title-slide .label {
+    letter-spacing: 0.5rem;
+    font-weight: 700;
+    color: #FFB800;
+    margin-bottom: 2rem;
+}
+
+.title-slide h1 {
+    font-size: 5rem;
+    line-height: 1.1;
+    margin-bottom: 2rem;
+    background: linear-gradient(135deg, #fff 0%, #aaa 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.title-slide .description {
+    font-size: 1.5rem;
+    color: #888;
+    max-width: 800px;
+}
+
+.maker-footer {
+    position: absolute;
+    bottom: 4rem;
+    width: 100%;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+    color: #555;
+    font-size: 0.9rem;
+    letter-spacing: 0.1rem;
+}
+
+.maker-footer .dots {
+    flex: 0 0 100px;
+    height: 1px;
+    background: repeating-linear-gradient(to right, #333 0, #333 4px, transparent 4px, transparent 8px);
+}
+
+/* Step Slide */
+.slide-content-grid {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 4rem;
+    height: 100%;
+    align-items: center;
+}
+
+.slide-image-container {
+    height: 100%;
+    border-radius: 1.5rem;
+    overflow: hidden;
+    background: #000;
+}
+
+.slide-image-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.slide-text-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.step-badge {
+    background: #FF6B00;
+    color: #fff;
+    padding: 0.4rem 1.2rem;
+    border-radius: 0.5rem;
+    font-weight: 700;
+    width: fit-content;
+    margin-bottom: 2rem;
+}
+
+.step-text {
+    font-size: 2.5rem;
+    line-height: 1.3;
+    color: #eee;
+}
+
+/* Controls */
+.presentation-controls {
+    padding: 2rem 4rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #000;
+}
+
+.nav-btn {
+    background: #fff;
+    color: #000;
+    border: none;
+    padding: 0.8rem 1.5rem;
+    border-radius: 0.5rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: transform 0.2s, opacity 0.2s;
+}
+
+.nav-btn:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+}
+
+.nav-btn:hover:not(:disabled) {
+    transform: scale(1.05);
+}
+
+.slide-progress {
+    display: flex;
+    gap: 1rem;
+}
+
+.progress-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #333;
+    cursor: pointer;
+    transition: background 0.3s, transform 0.2s;
+}
+
+.progress-dot.active {
+    background: #FFB800;
+    transform: scale(1.3);
+}
+
+.animate-in {
+    animation: fadeInSlideUp 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+}
+
+@keyframes fadeInSlideUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.conclusion-slide {
+    text-align: center;
+    align-items: center;
+}
+
+.qr-box {
+    width: 200px;
+    height: 200px;
+    background: #fff;
+    color: #000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 2rem 0;
+    border-radius: 1rem;
+    font-weight: 800;
+}

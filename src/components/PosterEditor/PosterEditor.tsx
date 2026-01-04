@@ -9,9 +9,8 @@ interface PosterEditorProps {
 
 const PosterEditor = ({ onSave, initialData }: PosterEditorProps) => {
     const canvasRef = useRef<HTMLCanvasElement>(null);
-    const [canvas, setCanvas] = useState<fabric.Canvas | null>(null);
-    const [selectedTool, setSelectedTool] = useState<string>('select');
-    const [selectedObject, setSelectedObject] = useState<fabric.Object | null>(null);
+    const [canvas, setCanvas] = useState<any>(null);
+    const [selectedObject, setSelectedObject] = useState<any>(null);
 
     useEffect(() => {
         if (canvasRef.current && !canvas) {
@@ -29,11 +28,11 @@ const PosterEditor = ({ onSave, initialData }: PosterEditorProps) => {
             }
 
             // Selection event
-            fabricCanvas.on('selection:created', (e) => {
+            fabricCanvas.on('selection:created', (e: any) => {
                 setSelectedObject(e.selected?.[0] || null);
             });
 
-            fabricCanvas.on('selection:updated', (e) => {
+            fabricCanvas.on('selection:updated', (e: any) => {
                 setSelectedObject(e.selected?.[0] || null);
             });
 
@@ -146,7 +145,7 @@ const PosterEditor = ({ onSave, initialData }: PosterEditorProps) => {
             if (file && canvas) {
                 const reader = new FileReader();
                 reader.onload = (event) => {
-                    fabric.Image.fromURL(event.target?.result as string, (img) => {
+                    fabric.Image.fromURL(event.target?.result as string, (img: any) => {
                         img.scaleToWidth(200);
                         canvas.add(img);
                         canvas.setActiveObject(img);
