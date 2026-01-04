@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import './Dashboard.css';
 
 interface Project {
@@ -10,15 +10,34 @@ interface Project {
 }
 
 interface DashboardProps {
-    onNavigate: (view: 'landing' | 'dashboard' | 'editor') => void;
+    onNavigate: (view: 'landing' | 'dashboard' | 'editor', projectId?: string) => void;
 }
 
 const Dashboard = ({ onNavigate }: DashboardProps) => {
-    const [projects] = useState<Project[]>([
-        { id: '1', title: 'Solar Powered Rover', lastEdited: '2 hours ago', status: 'draft' },
-        { id: '2', title: 'Hydraulic Claw', lastEdited: '1 day ago', status: 'completed' },
-        { id: '3', title: 'Smart Plant Monitor', lastEdited: '3 days ago', status: 'draft' },
-    ]);
+    const [projects, setProjects] = useState<Project[]>([]);
+
+    useEffect(() => {
+        const saved = localStorage.getItem('maker-projects');
+        if (saved) {
+            setProjects(JSON.parse(saved));
+        } else {
+            // Initial projects for demo if none exist
+            const initial: Project[] = [
+                { id: '1', title: 'Solar Powered Rover', lastEdited: '2 hours ago', status: 'draft' },
+                { id: '2', title: 'Hydraulic Claw', lastEdited: '1 day ago', status: 'completed' },
+                { id: '3', title: 'Smart Plant Monitor', lastEdited: '3 days ago', status: 'draft' },
+            ];
+            setProjects(initial);
+            localStorage.setItem('maker-projects', JSON.stringify(initial));
+        }
+    }, []);
+
+    const deleteProject = (id: string, e: React.MouseEvent) => {
+        e.stopPropagation();
+        const updated = projects.filter(p => p.id !== id);
+        setProjects(updated);
+        localStorage.setItem('maker-projects', JSON.stringify(updated));
+    };
 
     return (
         <div className="dashboard-container">
@@ -63,7 +82,7 @@ const Dashboard = ({ onNavigate }: DashboardProps) => {
 
                     <div className="project-grid">
                         {projects.map(project => (
-                            <div key={project.id} className="card project-card">
+                            <div key={project.id} className="card project-card" onClick={() => onNavigate('editor', project.id)} style={{ cursor: 'pointer' }}>
                                 <div className="project-thumb">
                                     {project.thumbnail ? (
                                         <img src={project.thumbnail} alt={project.title} />
@@ -76,9 +95,9 @@ const Dashboard = ({ onNavigate }: DashboardProps) => {
                                     <h4>{project.title}</h4>
                                     <p>Edited {project.lastEdited}</p>
                                     <div className="project-actions">
-                                        <button className="btn-icon" onClick={() => onNavigate('editor')}>✏️</button>
+                                        <button className="btn-icon" onClick={(e) => { e.stopPropagation(); onNavigate('editor', project.id); }}>✏️</button>
+                                        <button className="btn-icon" onClick={(e) => deleteProject(project.id, e)}>🗑️</button>
                                         <button className="btn-icon">📁</button>
-                                        <button className="btn-icon">💬</button>
                                     </div>
                                 </div>
                             </div>

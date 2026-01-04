@@ -5,8 +5,10 @@ import ProjectEditor from './components/Editor/ProjectEditor';
 
 function MainApp() {
     const [view, setView] = useState<'landing' | 'dashboard' | 'editor'>('landing');
+    const [editingProjectId, setEditingProjectId] = useState<string | null>(null);
 
-    const navigateTo = (newView: 'landing' | 'dashboard' | 'editor') => {
+    const navigateTo = (newView: 'landing' | 'dashboard' | 'editor', projectId?: string) => {
+        setEditingProjectId(projectId || null);
         setView(newView);
         window.scrollTo(0, 0);
     };
@@ -14,7 +16,7 @@ function MainApp() {
     const renderView = () => {
         switch (view) {
             case 'dashboard': return <Dashboard onNavigate={navigateTo} />;
-            case 'editor': return <ProjectEditor onNavigate={navigateTo} />;
+            case 'editor': return <ProjectEditor onNavigate={navigateTo} projectId={editingProjectId} />;
             default: return <Landing onNavigate={navigateTo} />;
         }
     };
