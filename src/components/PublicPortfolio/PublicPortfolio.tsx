@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import './PublicPortfolio.css';
+import { getCurrentUser, updateUserPoints, POINTS } from '../../utils/gamification';
 
 interface Project {
     id: string;
@@ -51,6 +52,48 @@ const PublicPortfolio = ({ onNavigate }: PublicPortfolioProps) => {
 
     const closeModal = () => {
         setSelectedProject(null);
+    };
+
+    const handleReaction = (type: 'love' | 'appreciate' | 'badge', projectId: string) => {
+        const currentUser = getCurrentUser();
+
+        // Update project reactions
+        const saved = localStorage.getItem('maker-projects');
+        if (saved) {
+            const allProjects: Project[] = JSON.parse(saved);
+            const updated = allProjects.map(p => {
+                if (p.id === projectId) {
+                    const reactions = p.reactions || { love: 0, appreciate: 0, badges: 0 };
+                    return {
+                        ...p,
+                        reactions: {
+                            ...reactions,
+                            [type]: (reactions[type as keyof typeof reactions] || 0) + 1
+                        }
+                    };
+                }
+                return p;
+            });
+            localStorage.setItem('maker-projects', JSON.stringify(updated));
+
+            // Update user points
+            updateUserPoints(currentUser.id, POINTS.GIVE_APPRECIATION);
+
+            // Reload projects
+            const completed = updated.filter((p: any) => p.status === 'completed');
+            setProjects(completed);
+
+            // Update selected project if in modal
+            if (selectedProject && selectedProject.id === projectId) {
+                const updatedProject = updated.find(p => p.id === projectId);
+                if (updatedProject) {
+                    setSelectedProject(updatedProject);
+                }
+            }
+
+            // Show feedback
+            alert(`${type === 'love' ? '❤️' : type === 'appreciate' ? '👏' : '🏆'} Reaction sent! +${POINTS.GIVE_APPRECIATION} points`);
+        }
     };
 
     return (
@@ -149,9 +192,9 @@ const PublicPortfolio = ({ onNavigate }: PublicPortfolioProps) => {
 
                         <div className="modal-footer">
                             <div className="reaction-buttons">
-                                <button className="reaction-btn love">❤️ Love</button>
-                                <button className="reaction-btn appreciate">👏 Appreciate</button>
-                                <button className="reaction-btn badge">🏆 Award Badge</button>
+                                <button className="reaction-btn love" onClick={() => handleReaction('love', selectedProject.id)}>❤️ Love</button>
+                                <button className="reaction-btn appreciate" onClick={() => handleReaction('appreciate', selectedProject.id)}>👏 Appreciate</button>
+                                <button className="reaction-btn badge" onClick={() => handleReaction('badge', selectedProject.id)}>🏆 Award Badge</button>
                             </div>
                         </div>
                     </div>

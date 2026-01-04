@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import './Dashboard.css';
+import Leaderboard from '../Social/Leaderboard';
 
 interface Project {
     id: string;
@@ -107,6 +108,10 @@ const Dashboard = ({ onNavigate }: DashboardProps) => {
                             <p>Start Documentation</p>
                         </div>
                     </div>
+                </div>
+
+                <div className="leaderboard-section">
+                    <Leaderboard />
                 </div>
             </main>
         </div>

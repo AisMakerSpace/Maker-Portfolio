@@ -217,11 +217,25 @@
 
 .create-card p {
     font-weight: 600;
-    color: var(--brand-orange);
+    box-shadow: var(--shadow-sm);
 }
 
 @media (max-width: 600px) {
     .stats-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.leaderboard-section {
+    margin-top: 3rem;
+}
+
+@media (max-width: 900px) {
+    .dashboard-header {
+        padding: 2rem 0;
+    }
+
+    .project-grid {
         grid-template-columns: 1fr;
     }
 }
