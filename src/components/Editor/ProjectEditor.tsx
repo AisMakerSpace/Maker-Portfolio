@@ -36,7 +36,16 @@ const ProjectEditor = ({ onNavigate, projectId }: EditorProps) => {
                 const projects: (ProjectData & { id: string })[] = JSON.parse(saved);
                 const found = projects.find(p => p.id === projectId);
                 if (found) {
-                    setData(found);
+                    // Ensure all required fields exist with defaults
+                    setData({
+                        title: found.title || 'New Maker Project',
+                        description: found.description || '',
+                        materials: Array.isArray(found.materials) && found.materials.length > 0 ? found.materials : [''],
+                        steps: Array.isArray(found.steps) && found.steps.length > 0 ? found.steps : [{ id: '1', text: '' }],
+                        status: found.status,
+                        id: found.id,
+                        lastEdited: found.lastEdited
+                    });
                 }
             }
         }
